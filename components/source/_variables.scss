@@ -1,3 +1,24 @@
+$orientation: screen;
+$mobile: 480px;
+$tablet: 698px;
+$laptop: 992px;
+$screen: 1200px;
+@function orientation() {
+    @if ($orientation == 'screen') {
+        @return 'max-width';
+    }
+
+    @if ($orientation == 'mobile') {
+        @return 'min-width'
+    }
+}
+
+@mixin media($arg) {
+    @media (orientation(): $arg) {
+        @content
+    }
+}
+
 $get-up: #d50c52;
 $coolOrange: #FEC715;
 $orangeButtonText: rgb(74, 74, 228);
