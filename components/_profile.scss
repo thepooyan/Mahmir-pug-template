@@ -1,13 +1,22 @@
 @import 'source/variables';
 
+.squareContainer {
+    width: 0;
+    height: 0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #profile {
     header {
         display: flex;
         justify-content: space-between;
-        padding: 1em;
+        padding: 0 1em;
 
-        > img {
-            width: 7em;
+        >img {
+            width: 6.5em;
+            padding: .2em;
         }
 
         .left {
@@ -31,6 +40,7 @@
                     left: 0;
                     z-index: -10;
                     box-shadow: 1px 1px 5px var(--text-grey);
+                    background: var(--white);
                     font-size: .6em;
                     padding: 0;
                     margin: 0;
@@ -71,12 +81,8 @@
                 .fa-user {
                     background: var(--text-grey);
                     color: var(--white);
-                    height: 0;
-                    width: 0;
                     padding: 0.9em;
                     display: inline-flex;
-                    justify-content: center;
-                    align-items: center;
                     border-radius: 50%;
                 }
 
@@ -91,6 +97,29 @@
                         transform: rotate(180deg);
                     }
                 }
+            }
+        }
+    }
+
+    .cursor {
+        background: linear-gradient(90deg, var(--theme-2) 0, var(--theme) 62%);
+        color: var(--white);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1em;
+
+        .current {
+            @include flex(fs, c);
+            gap: .5em;
+            font-weight: bold;
+            font-size: 1.3em;
+
+            i {
+                border: .08em solid var(--white);
+                padding: 0.7em;
+                font-size: 1.4em;
+                border-radius: 0.3em;
             }
         }
     }

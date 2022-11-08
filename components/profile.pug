@@ -1,11 +1,11 @@
 header
-    img(src="Content/images/img/HoloG.png", alt="")
+    img(src="Content/images/img/logo-red.png", alt="")
 
     .left
         a(href="").far.fa-bell
         .vl
         .user(data-onclick="active")
-            i.far.fa-user
+            i.far.fa-user.squareContainer
             i.fas.fa-chevron-down
 
             ul 
@@ -15,6 +15,11 @@ header
                 a(href="#") آیتم
                 .hr
                 a(href="#") خروج
+.cursor 
+    .current
+        i.far.fa-user.squareContainer
+        span داشبورد
+    .breadcrumb پنل > داشبورد
 aside 
 
 main
