@@ -1,3 +1,97 @@
-h2 {
-    color: red;
+@import 'source/variables';
+
+#profile {
+    header {
+        display: flex;
+        justify-content: space-between;
+        padding: 1em;
+
+        > img {
+            width: 7em;
+        }
+
+        .left {
+            display: flex;
+            align-items: center;
+            gap: .8em;
+            font-size: 1.5em;
+
+            .vl {
+                height: 50%;
+                width: 2px;
+                background-color: var(--text-grey);
+            }
+
+            .user {
+                cursor: pointer;
+                position: relative;
+
+                ul {
+                    position: absolute;
+                    left: 0;
+                    z-index: -10;
+                    box-shadow: 1px 1px 5px var(--text-grey);
+                    font-size: .6em;
+                    padding: 0;
+                    margin: 0;
+                    list-style-type: none;
+                    min-width: 10em;
+
+                    opacity: 0;
+                    top: 80%;
+                    transition: .2s;
+
+                    a {
+                        display: block;
+                        color: var(--text-grey);
+                        padding: .7em 1.5em;
+                        transition: .2s;
+
+                        &:hover {
+                            background-color: var(--back-grey);
+                            color: var(--theme);
+                        }
+                    }
+
+                    .hr {
+                        width: 80%;
+                        height: 1px;
+                        background: var(--back-grey);
+                        margin: auto;
+                    }
+                }
+
+                .fa-chevron-down {
+                    transition: .35s;
+                    font-size: .7em;
+                    margin-right: .7em;
+                    color: var(--text-grey);
+                }
+
+                .fa-user {
+                    background: var(--text-grey);
+                    color: var(--white);
+                    height: 0;
+                    width: 0;
+                    padding: 0.9em;
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 50%;
+                }
+
+                &.active {
+                    ul {
+                        opacity: 100;
+                        top: calc(100% + 1em);
+                        z-index: 1;
+                    }
+
+                    .fas.fa-chevron-down {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+        }
+    }
 }
