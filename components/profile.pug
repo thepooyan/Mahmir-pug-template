@@ -21,10 +21,12 @@ header
         span داشبورد
     .breadcrumb پنل > داشبورد
 aside 
-    li داشبورد
-    li پروفایل
-    li دوره‌های من
-    li پیام‌ها
+    li.active(data-fa="",data-onclick="active", data-group="myAside") داشبورد
+    .hr
+    li(data-fa="",data-onclick="active", data-group="myAside") پروفایل
+    li(data-fa="",data-onclick="active", data-group="myAside") دوره‌های من
+    .hr
+    li(data-fa="",data-onclick="active", data-group="myAside") پیام‌ها
 section 
     for item in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,8,9,10,11,12,13,14,15,16,8,9,10,11,12,13,14,15,16]
         | data 
