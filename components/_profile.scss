@@ -13,6 +13,11 @@
         display: flex;
         justify-content: space-between;
         padding: 0 1em;
+        width: 100%;
+        background-color: var(--white);
+        box-shadow: 0px 2px 1px var(--back-grey);
+        position: sticky;
+        top: 0;
 
         >img {
             width: 6.5em;
@@ -122,5 +127,23 @@
                 border-radius: 0.3em;
             }
         }
+    }
+
+    --main-width: 80%;
+
+    aside {
+        background-color: grey;
+        width: calc(100% - var(--main-width));
+        position: sticky;
+        top: 4.8em;
+        height: 88.3vh;
+        z-index: -1;
+    }
+
+    section {
+        width: var(--main-width);
+        background-color: red;
+        margin-right: 16em;
+        margin-top: -45.3vw;
     }
 }
