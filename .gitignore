@@ -2,3 +2,4 @@
 /0Export/index.html
 /0Export/Content/style.css
 *.map
+/node_modules/
