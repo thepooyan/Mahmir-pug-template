@@ -207,6 +207,8 @@
     section {
         width: var(--main-width);
         margin-right: calc(100% - var(--main-width));
-        margin-top: -88.3vh;
+        margin-top: -85.3vh;
+
+        @import 'children/profile';
     }
 }
