@@ -4,28 +4,32 @@ const path = require('path');
 const events = require('events');
 const watchEmmiter = new events.EventEmitter();
 
-function compile() {
-    watchEmmiter.emit('stop');
-    watchEmmiter.removeAllListeners();
-    const pages = fs.readdirSync('children', 'utf-8');
-    pages.forEach(item => {
-        let name = path.parse(item).name;
-        console.log(`compiling child ${name}...`)
+function compile(page) {
 
-        const originalFile = fs.readFileSync('pages/index.pug', 'utf-8');
-        let preCompiledFile = originalFile.replace(/include .*/, `include ../children/${name}`);
+    const pageChilds = fs.readdirSync(`pages/${page}`, 'utf-8');
+    
+    pageChilds.forEach(item => {
+        let name = path.parse(item).name;
+        console.log(`compiling child ${name} of ${page}...`)
+
+        const originalFile = fs.readFileSync(`pages/${page}.pug`, 'utf-8');
+        let preCompiledFile = originalFile.replace(/include .*/, `include ${page}/${name}`);
         preCompiledFile = preCompiledFile.replaceAll('#{currentPage}', `"${name}"`);
         
-        fs.writeFileSync('pages/index.pug', preCompiledFile, 'utf-8');
+        fs.writeFileSync(`pages/${page}.pug`, preCompiledFile, 'utf-8');
+
+        const base = fs.readFileSync('00 PCDI/base/base.pug', 'utf-8');
+        let modifiedBase = base.replace(/include .*/, `include ../../pages/${page}`)
+        fs.writeFileSync('00 PCDI/base/base.pug', modifiedBase, 'utf-8');
 
         let compiler = pug.compileFile('00 PCDI/base/base.pug');
         let compiledFile = compiler()
-        fs.writeFileSync(`./0Export/${name}.html`, compiledFile)
+        fs.writeFileSync(`./0Export/${page}-${name}.html`, compiledFile)
 
-        //restore the base file
-        fs.writeFileSync('pages/index.pug', originalFile, 'utf-8');
+        //restore the base files
+        fs.writeFileSync(`pages/${page}.pug`, originalFile, 'utf-8');
+        fs.writeFileSync('00 PCDI/base/base.pug', base, 'utf-8');
     })
-    startWatch();
 }
 
 //watch depencies
@@ -33,7 +37,7 @@ function watchDir(dirName) {
     const dir = fs.readdirSync(dirName, { encoding: 'utf-8' });;
     dir.forEach(item => {
         if (path.extname(item).toLowerCase() === '.pug') {
-            let watcher = fs.watch(`${dirName}${item}`, 'utf-8', compile)
+            let watcher = fs.watch(`${dirName}${item}`, 'utf-8', compileAllPages)
             watchEmmiter.on('stop', ()=>{
                 watcher.close();
             })
@@ -47,4 +51,18 @@ function startWatch() {
     watchDir('pages/')
 }
 
-compile()
+
+function compileAllPages() {
+    watchEmmiter.emit('stop');
+    watchEmmiter.removeAllListeners();
+
+    const pages= fs.readdirSync('./pages', 'utf-8')
+    pages.forEach(item=>{
+        itemPath = path.parse(item);
+        if (itemPath.ext.toLowerCase() === '.pug')
+        compile(itemPath.name)
+    })
+    startWatch();
+}
+
+compileAllPages()
