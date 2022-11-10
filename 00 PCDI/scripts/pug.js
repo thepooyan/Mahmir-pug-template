@@ -15,7 +15,7 @@ function compile(page) {
 
             const originalFile = fs.readFileSync(`pages/${page}.pug`, 'utf-8');
             let preCompiledFile = originalFile.replace(/include .*/, `include ${page}/${child}`);
-            preCompiledFile = preCompiledFile.replaceAll('#{currentPage}', `"${child}"`);
+            preCompiledFile = preCompiledFile.replaceAll('#{currentPage}', `${child}`);
 
             fs.writeFileSync(`pages/${page}.pug`, preCompiledFile, 'utf-8');
 
@@ -50,20 +50,15 @@ function compile(page) {
 
 //watch depencies
 function watchDir(dirName) {
-    const dir = fs.readdirSync(dirName, { encoding: 'utf-8' });;
-    dir.forEach(item => {
-        if (path.extname(item).toLowerCase() === '.pug') {
-            let watcher = fs.watch(`${dirName}${item}`, 'utf-8', compileAllPages)
-            watchEmmiter.on('stop', () => {
-                watcher.close();
-            })
-            console.log(`watching ${dirName}${item}...`)
-        }
+    let watcher = fs.watch(`${dirName}`, 'utf-8', compileAllPages)
+    watchEmmiter.on('stop', () => {
+        watcher.close();
     })
+    console.log(`watching ${dirName}...`)
 }
+
 function startWatch() {
     watchDir('components/')
-    watchDir('children/')
     watchDir('pages/')
 }
 
@@ -78,6 +73,7 @@ function compileAllPages() {
         if (itemPath.ext.toLowerCase() === '.pug')
             compile(itemPath.name)
     })
+    
     startWatch();
 }
 
