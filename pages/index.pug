@@ -21,11 +21,15 @@ header
         span داشبورد
     .breadcrumb پنل > داشبورد
 aside 
-    li.active(data-fa="",data-onclick="active", data-group="myAside") داشبورد
+    li.active(data-fa="",data-onclick="active", data-group="myAside")
+        a(href="index.html") داشبورد
     .hr
-    li(data-fa="",data-onclick="active", data-group="myAside") پروفایل
-    li(data-fa="",data-onclick="active", data-group="myAside") دوره‌های من
+    li(data-fa="",data-onclick="active", data-group="myAside")
+        a(href="profile.html") پروفایل
+    li(data-fa="",data-onclick="active", data-group="myAside")
+        a(href="myCourse.html") دوره‌های من
     .hr
-    li(data-fa="",data-onclick="active", data-group="myAside") پیام‌ها
+    li(data-fa="",data-onclick="active", data-group="myAside")
+        a(href="msg.html") پیام‌ها
 section 
-    include ../children/index
+    include ../children/profile

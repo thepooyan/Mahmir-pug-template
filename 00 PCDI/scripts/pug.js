@@ -6,6 +6,7 @@ const watchEmmiter = new events.EventEmitter();
 
 function compile() {
     watchEmmiter.emit('stop');
+    watchEmmiter.removeAllListeners();
     const pages = fs.readdirSync('children', 'utf-8');
     pages.forEach(item => {
         let name = path.parse(item).name;
