@@ -2,34 +2,6 @@
 @import '../../components/source/Fonts';
 @import '../../components/source/root';
 
-* {
-    box-sizing: border-box;
-}
-
-body {
-    background-color: #fafafa;
-    margin: 0;
-    padding: 0;
-    direction: rtl;
-    font-family: iransansx;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-button {
-    font-family: iransansx;
-    cursor: pointer;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-:root {
-    --border-radius: 30px;
-}
+@import '../../components/source/general';
 
 @import '../../pages/index.scss';

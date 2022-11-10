@@ -1,0 +1,49 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fafafa;
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+    font-family: iransansx;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+button {
+    font-family: iransansx;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    &.main {
+        background-color: var(--theme);
+        color: var(--text-bright);
+        border: none;
+        border-radius: 0.2em;
+        font-size: 0.9em;
+        padding: 0.3em 1.2em;
+        font-weight: bold;
+        transition: .3s;
+
+        &.ops {
+            color: var(--text-dim);
+            background-color: var(--back-dim-o1);
+        }
+
+        &:hover {
+            box-shadow: 2px 2px 5px #0000004a;
+
+        }
+    }
+    
+}

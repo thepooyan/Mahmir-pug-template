@@ -1,1 +1,24 @@
-h2 profile
+mixin lb(name, type)
+    label
+        =name
+        input(type=type)
+
+.cont 
+    h3 تکمیل اطلاعات فردی
+    form 
+        +lb('نام:', 'text')
+        +lb('نام خانوادگی:', 'text')
+        +lb('نام کاربری:', 'text')
+        +lb('ایمیل:', 'text')
+        +lb('شماره موبایل:', 'text')
+        +lb('کد ملی:', 'text')
+        +lb('میزان تحصیلات:', 'text')
+        +lb('رشته تحصیلی:', 'text')
+        +lb('نام پدر:', 'text')
+        +lb('تاریخ تولد:', 'text')
+        +lb('استان:', 'text')
+        +lb('شهر:', 'text')
+        +lb('آدرس:', 'text')
+        div
+            button.main ویرایش
+            button.main.ops انصراف

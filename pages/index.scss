@@ -186,12 +186,12 @@
             margin: .5em 0;
         }
 
-        li {
+        a {
+            display: block;
             padding: 0.4em 1em;
             padding-right: 1em;
             padding-right: 1.6em;
             transition: .1s;
-            cursor: pointer;
 
             &:hover {
                 color: var(--text-bright);
@@ -207,7 +207,8 @@
     section {
         width: var(--main-width);
         margin-right: calc(100% - var(--main-width));
-        margin-top: -85.3vh;
+        margin-top: -88.3vh;
+        padding: 1em;
 
         @import 'children/profile';
     }
