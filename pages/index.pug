@@ -2,7 +2,7 @@ header
     img(src="Content/images/img/logo-red.png", alt="")
 
     .left
-        a(href="", data-count="1").far.fa-bell
+        a(href="msg.html", data-count="1").far.fa-bell
         .vl
         .user(data-onclick="active")
             i.far.fa-user.squareContainer
@@ -21,11 +21,12 @@ header
         span داشبورد
     .breadcrumb پنل > داشبورد
 aside 
-    a.active(data-fa="",data-onclick="active", data-group="myAside", href="index.html") داشبورد
+    a(data-fa="",data-onclick="active", data-group="myAside", href="index.html", class=#{currentPage}==='index'?'active':'') داشبورد
     .hr
-    a(data-fa="",data-onclick="active", data-group="myAside", href="profile.html") پروفایل
-    a(data-fa="",data-onclick="active", data-group="myAside", href="myCourse.html") دوره‌های من
+    a(data-fa="",data-onclick="active", data-group="myAside", href="profile.html", class=#{currentPage}==='profile'?'active':'') پروفایل
+    a(data-fa="",data-onclick="active", data-group="myAside", href="myCourse.html", class=#{currentPage}==='myCourse'?'active':'') دوره‌های من
     .hr
-    a(data-fa="",data-onclick="active", data-group="myAside", href="msg.html") پیام‌ها
+    a(data-fa="",data-onclick="active", data-group="myAside", href="msg.html", class=#{currentPage}==='msg'?'active':'') پیام‌ها
 section 
-    include ../children/profile
+    .cont
+        include children/*

@@ -12,13 +12,18 @@ function compile() {
         let name = path.parse(item).name;
         console.log(`compiling child ${name}...`)
 
-        let file = fs.readFileSync('pages/index.pug', 'utf-8');
-        let addChild = file.replace(/include .*/, `include ../children/${name}`);
-        fs.writeFileSync('pages/index.pug', addChild, 'utf-8');
+        const originalFile = fs.readFileSync('pages/index.pug', 'utf-8');
+        let preCompiledFile = originalFile.replace(/include .*/, `include ../children/${name}`);
+        preCompiledFile = preCompiledFile.replaceAll('#{currentPage}', `"${name}"`);
+        
+        fs.writeFileSync('pages/index.pug', preCompiledFile, 'utf-8');
 
         let compiler = pug.compileFile('00 PCDI/base/base.pug');
-        let rse = compiler()
-        fs.writeFileSync(`./0Export/${name}.html`, rse)
+        let compiledFile = compiler()
+        fs.writeFileSync(`./0Export/${name}.html`, compiledFile)
+
+        //restore the base file
+        fs.writeFileSync('pages/index.pug', originalFile, 'utf-8');
     })
     startWatch();
 }

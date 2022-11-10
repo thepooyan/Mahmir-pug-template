@@ -210,6 +210,12 @@
         margin-top: -88.3vh;
         padding: 1em;
 
-        @import 'children/profile';
+        .cont {
+            border: 1px solid var(--text-dim);
+            border-radius: .3em;
+            padding: 1em;
+            
+            @import 'children/profile';
+        }
     }
 }
