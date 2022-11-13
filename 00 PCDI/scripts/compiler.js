@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const events = require('events');
 const watchEmmiter = new events.EventEmitter();
+const chokidar = require('chokidar');
 
 function compile(page) {
 
@@ -51,10 +52,14 @@ function compile(page) {
 
 }
 
+
 //watch depencies
 function watchDir(dirName) {
-    let watcher = fs.watch(`${dirName}`, 'utf-8', compileAllPages)
-    watchEmmiter.on('stop', () => {
+    // let watcher = fs.watch(`${dirName}`, 'utf-8', compileAllPages)
+    let watcher = chokidar.watch(`${dirName}`, {ignoreInitial: true});
+    watcher.on('all', compileAllPages);
+
+    watchEmmiter.on('stop',() => {
         watcher.close();
     })
     console.log(`watching ${dirName}...`)

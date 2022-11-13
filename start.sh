@@ -1,1 +1,1 @@
-node "./00 PCDI/scripts/pug.js" & sass -w --load-path=./ "00 PCDI/base/base.scss" "0Export/Content/style.css"
+node "./00 PCDI/scripts/compiler.js" & sass -w --load-path=./ "00 PCDI/base/base.scss" "0Export/Content/style.css"
