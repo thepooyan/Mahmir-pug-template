@@ -96,13 +96,12 @@ function watchDir(dirName) {
         if (deleted.dir === 'components') return
 
         if (deleted.dir === 'pages')
-        fs.rmSync(`0Export/${deleted.name}.html`)
+        fs.existsSync(`0Export/${deleted.name}.html`) && fs.rmSync(`0Export/${deleted.name}.html`)
         else {
             if (deleted.name === "index") return
             else {
                 let dir = deleted.dir.replace('pages/', '');
-                fs.rmSync(`0Export/${dir}/${deleted.name}.html`)
-                console.log(deleted)
+                fs.existsSync(`0Export/${dir}/${deleted.name}.html`) && fs.rmSync(`0Export/${dir}/${deleted.name}.html`)
             }
         }
     });
