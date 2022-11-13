@@ -35,11 +35,12 @@ function compile(page) {
             //final compile and export
             let compiler = pug.compileFile('00 PCDI/base/base.pug');
             let compiledFile = compiler()
-            fs.writeFileSync(`./0Export/${page}-${child}.html`, compiledFile)
-
-            //restore the base files
-            // fs.writeFileSync(`pages/${page}.pug`, originalFile, 'utf-8');
-            // fs.writeFileSync('00 PCDI/base/base.pug', base, 'utf-8');
+            if (child !== 'index') {
+                fs.mkdirSync(`./0Export/${page}`, {recursive: true});
+                fs.writeFileSync(`./0Export/${page}/${child}.html`, compiledFile)
+            } else {
+                fs.writeFileSync(`./0Export/${page}.html`, compiledFile)
+            }
         })
     } else {
         console.log(`compiling ${page}...`)
