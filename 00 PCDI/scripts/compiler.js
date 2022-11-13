@@ -5,13 +5,32 @@ const events = require('events');
 const watchEmmiter = new events.EventEmitter();
 const chokidar = require('chokidar');
 
+function buildBase(page, isVirtual=true) {
+    //build the base for the page
+    const base = fs.readFileSync('00 PCDI/base/base.pug', 'utf-8');
+
+    let route;
+    if (isVirtual)
+        route = "virtualDOM/pages"
+        else
+        route = "../pages"
+
+    let modifiedBase = base.replace(/include .*/, `include ../${route}/${page}`)
+    fs.writeFileSync('00 PCDI/base/base.pug', modifiedBase, 'utf-8');
+}
+function compileBase() {
+    let compiler = pug.compileFile('00 PCDI/base/base.pug');
+    let compiledFile = compiler()
+    return compiledFile
+}
+
 function compile(page) {
     let pageChilds;
-    let hasChildren = ()=>{
+    let hasChildren = () => {
         if (fs.existsSync(`pages/${page}`) && fs.readdirSync(`pages/${page}`).length >= 1)
-        return true
+            return true
         else
-        return false
+            return false
     };
 
     if (hasChildren()) {
@@ -24,38 +43,26 @@ function compile(page) {
             const originalFile = fs.readFileSync(`pages/${page}.pug`, 'utf-8');
             let preCompiledFile = originalFile.replace(/include .*/, `include ../../../pages/${page}/${child}`);
             preCompiledFile = preCompiledFile.replaceAll('#{currentPage}', `${child}`);
-            preCompiledFile = preCompiledFile.replaceAll("href", `href="me"`);
+            // preCompiledFile = preCompiledFile.replaceAll("href", `href="me"`);
+            // console.log(preCompiledFile)
 
             fs.writeFileSync(`00 PCDI/virtualDOM/pages/${page}.pug`, preCompiledFile, 'utf-8');
 
-            //build the base for the page
-            const base = fs.readFileSync('00 PCDI/base/base.pug', 'utf-8');
-            let modifiedBase = base.replace(/include .*/, `include ../virtualDOM/pages/${page}`)
-            fs.writeFileSync('00 PCDI/base/base.pug', modifiedBase, 'utf-8');
+            buildBase(page);
 
             //final compile and export
-            let compiler = pug.compileFile('00 PCDI/base/base.pug');
-            let compiledFile = compiler()
             if (child !== 'index') {
-                fs.mkdirSync(`./0Export/${page}`, {recursive: true});
-                fs.writeFileSync(`./0Export/${page}/${child}.html`, compiledFile)
+                fs.mkdirSync(`./0Export/${page}`, { recursive: true });
+                fs.writeFileSync(`./0Export/${page}/${child}.html`, compileBase())
             } else {
-                fs.writeFileSync(`./0Export/${page}.html`, compiledFile)
+                fs.writeFileSync(`./0Export/${page}.html`, compileBase())
             }
         })
     } else {
         console.log(`compiling ${page}...`)
 
-        const base = fs.readFileSync('00 PCDI/base/base.pug', 'utf-8');
-        let modifiedBase = base.replace(/include .*/, `include ../../pages/${page}`)
-        fs.writeFileSync('00 PCDI/base/base.pug', modifiedBase, 'utf-8');
-
-        let compiler = pug.compileFile('00 PCDI/base/base.pug');
-        let compiledFile = compiler()
-        fs.writeFileSync(`./0Export/${page}.html`, compiledFile)
-
-        //restore the base files
-        fs.writeFileSync('00 PCDI/base/base.pug', base, 'utf-8');
+        buildBase(page, false);
+        fs.writeFileSync(`./0Export/${page}.html`, compileBase())
     }
 
 }
@@ -64,10 +71,10 @@ function compile(page) {
 //watch depencies
 function watchDir(dirName) {
     // let watcher = fs.watch(`${dirName}`, 'utf-8', compileAllPages)
-    let watcher = chokidar.watch(`${dirName}`, {ignoreInitial: true});
+    let watcher = chokidar.watch(`${dirName}`, { ignoreInitial: true });
     watcher.on('all', compileAllPages);
 
-    watchEmmiter.on('stop',() => {
+    watchEmmiter.on('stop', () => {
         watcher.close();
     })
     console.log(`watching ${dirName}...`)
@@ -88,7 +95,7 @@ function compileAllPages() {
         if (itemPath.ext.toLowerCase() === '.pug')
             compile(itemPath.name)
     })
-    
+
     startWatch();
 }
 
