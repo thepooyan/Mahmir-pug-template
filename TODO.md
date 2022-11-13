@@ -8,5 +8,3 @@
 
 8. pre compile the cildern and complete the virtual dom
 9. config.json
-
-10. check empty direcotories after deleting each file

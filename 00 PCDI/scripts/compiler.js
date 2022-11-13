@@ -102,6 +102,8 @@ function watchDir(dirName) {
             else {
                 let dir = deleted.dir.replace('pages/', '');
                 fs.existsSync(`0Export/${dir}/${deleted.name}.html`) && fs.rmSync(`0Export/${dir}/${deleted.name}.html`)
+                if (fs.readdirSync(`0Export/${dir}`).length === 0)
+                fs.rmdirSync(`0Export/${dir}`)
             }
         }
     });
