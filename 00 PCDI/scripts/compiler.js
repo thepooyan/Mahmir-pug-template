@@ -25,12 +25,12 @@ function compileBase() {
 }
 function preCompile(file, page) {
 
-    file = file.replaceAll(`href=">index"`, `href="/0Export/${page}.html"`)
+    file = file.replaceAll(`href=">index"`, `href="/${page}.html"`)
 
     let res = [...file.matchAll(/(?<=href=")>.*?(?=")/g)];
     
     res.forEach(i=>{
-        file = file.replace(i[0], `/0Export/${page}/${i[0].substring(1)}.html`)
+        file = file.replace(i[0], `/${page}/${i[0].substring(1)}.html`)
     })
     
     return file
