@@ -11,7 +11,7 @@ function buildBase(page, isVirtual=true) {
 
     let route;
     if (isVirtual)
-        route = "virtualDOM/pages"
+        route = "virtualDOM"
         else
         route = "../pages"
 
@@ -22,6 +22,18 @@ function compileBase() {
     let compiler = pug.compileFile('00 PCDI/base/base.pug');
     let compiledFile = compiler()
     return compiledFile
+}
+function preCompile(file, page) {
+
+    file = file.replaceAll(`href=">index"`, `href="/0Export/${page}.html"`)
+
+    let res = [...file.matchAll(/(?<=href=")>.*?(?=")/g)];
+    
+    res.forEach(i=>{
+        file = file.replace(i[0], `/0Export/${page}/${i[0].substring(1)}.html`)
+    })
+    
+    return file
 }
 
 function compile(page) {
@@ -39,14 +51,13 @@ function compile(page) {
             let child = path.parse(item).name;
             console.log(`compiling ${page} => ${child}`)
 
-            //pre compile into virtual dom
+            //pre compile the child related issues into virtual dom
             const originalFile = fs.readFileSync(`pages/${page}.pug`, 'utf-8');
-            let preCompiledFile = originalFile.replace(/include .*/, `include ../../../pages/${page}/${child}`);
+            let preCompiledFile = originalFile.replace(/include .*/, `include ../../pages/${page}/${child}`);
             preCompiledFile = preCompiledFile.replaceAll('#{currentPage}', `${child}`);
-            // preCompiledFile = preCompiledFile.replaceAll("href", `href="me"`);
-            // console.log(preCompiledFile)
+            preCompiledFile = preCompile(preCompiledFile, page);
 
-            fs.writeFileSync(`00 PCDI/virtualDOM/pages/${page}.pug`, preCompiledFile, 'utf-8');
+            fs.writeFileSync(`00 PCDI/virtualDOM/${page}.pug`, preCompiledFile, 'utf-8');
 
             buildBase(page);
 
@@ -60,8 +71,12 @@ function compile(page) {
         })
     } else {
         console.log(`compiling ${page}...`)
+        const originalFile = fs.readFileSync(`pages/${page}.pug`, 'utf-8');
+        let preCompiledFile = preCompile(originalFile, page);
+        fs.writeFileSync(`00 PCDI/virtualDOM/${page}.pug`, preCompiledFile, 'utf-8');
 
-        buildBase(page, false);
+
+        buildBase(page);
         fs.writeFileSync(`./0Export/${page}.html`, compileBase())
     }
 
