@@ -4,4 +4,4 @@
 *.map
 /node_modules/
 
-/00 PCDI/virtualDOM/*
+/00 PCDI/virtualDOM/
