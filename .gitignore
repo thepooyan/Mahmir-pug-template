@@ -6,4 +6,5 @@
 /0Export/*/*.html
 /0Export/Content/style.css
 
-/00 PCDI/virtualDOM/
+/00 PCDI/virtualDOM/*.pug
+/00 PCDI/virtualDOM/*/*.pug
