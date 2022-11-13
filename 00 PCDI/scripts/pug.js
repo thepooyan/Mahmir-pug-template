@@ -13,23 +13,26 @@ function compile(page) {
             let child = path.parse(item).name;
             console.log(`compiling child ${child} of ${page}...`)
 
+            //pre compile into virtual dom
             const originalFile = fs.readFileSync(`pages/${page}.pug`, 'utf-8');
-            let preCompiledFile = originalFile.replace(/include .*/, `include ${page}/${child}`);
+            let preCompiledFile = originalFile.replace(/include .*/, `include ../../../pages/${page}/${child}`);
             preCompiledFile = preCompiledFile.replaceAll('#{currentPage}', `${child}`);
 
-            fs.writeFileSync(`pages/${page}.pug`, preCompiledFile, 'utf-8');
+            fs.writeFileSync(`00 PCDI/virtualDOM/pages/${page}.pug`, preCompiledFile, 'utf-8');
 
+            //build the base for the page
             const base = fs.readFileSync('00 PCDI/base/base.pug', 'utf-8');
-            let modifiedBase = base.replace(/include .*/, `include ../../pages/${page}`)
+            let modifiedBase = base.replace(/include .*/, `include ../virtualDOM/pages/${page}`)
             fs.writeFileSync('00 PCDI/base/base.pug', modifiedBase, 'utf-8');
 
+            //final compile and export
             let compiler = pug.compileFile('00 PCDI/base/base.pug');
             let compiledFile = compiler()
             fs.writeFileSync(`./0Export/${page}-${child}.html`, compiledFile)
 
             //restore the base files
-            fs.writeFileSync(`pages/${page}.pug`, originalFile, 'utf-8');
-            fs.writeFileSync('00 PCDI/base/base.pug', base, 'utf-8');
+            // fs.writeFileSync(`pages/${page}.pug`, originalFile, 'utf-8');
+            // fs.writeFileSync('00 PCDI/base/base.pug', base, 'utf-8');
         })
     } else {
         console.log(`compiling ${page}...`)
