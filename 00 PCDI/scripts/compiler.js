@@ -5,18 +5,18 @@ const events = require('events');
 const watchEmmiter = new events.EventEmitter();
 const chokidar = require('chokidar');
 
-function buildBase(page, isVirtual=true) {
+function buildBase(page, isChild=false) {
     //build the base for the page
     const base = fs.readFileSync('00 PCDI/base/base.pug', 'utf-8');
 
-    let route;
-    if (isVirtual)
-        route = "virtualDOM"
-        else
-        route = "../pages"
-
-    let modifiedBase = base.replace(/include .*/, `include ../${route}/${page}`)
+    let modifiedBase = base.replace(/include .*/, `include ../virtualDOM/${page}`)
+    if (isChild)
+    modifiedBase = base.replace("Content/style.css", "../Content/style.css")
     fs.writeFileSync('00 PCDI/base/base.pug', modifiedBase, 'utf-8');
+    
+    return function() {
+        fs.writeFileSync('00 PCDI/base/base.pug', base, 'utf-8');
+    }
 }
 function compileBase() {
     let compiler = pug.compileFile('00 PCDI/base/base.pug');
@@ -59,13 +59,15 @@ function compile(page) {
 
             fs.writeFileSync(`00 PCDI/virtualDOM/${page}.pug`, preCompiledFile, 'utf-8');
 
-            buildBase(page);
-
+            
             //final compile and export
             if (child !== 'index') {
+                let restore = buildBase(page, true);
                 fs.mkdirSync(`./0Export/${page}`, { recursive: true });
                 fs.writeFileSync(`./0Export/${page}/${child}.html`, compileBase())
+                restore();
             } else {
+                buildBase(page);
                 fs.writeFileSync(`./0Export/${page}.html`, compileBase())
             }
         })
