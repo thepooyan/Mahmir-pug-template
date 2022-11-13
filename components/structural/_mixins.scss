@@ -18,7 +18,7 @@ $screen: 1200px;
         @content
     }
 }
-/*---------------MIXINS & FUNCTIONS--------------------------*/
+
 @function letterSpace($unit) {
     $result: $unit / 25;
     @return $result;
@@ -77,4 +77,3 @@ $screen: 1200px;
     width: $width / $scale;
     height: $height / $scale;
 }
-/*---------------MIXINS & FUNCTIONS--------------------------*/
