@@ -85,9 +85,25 @@ function compile(page) {
 
 //watch depencies
 function watchDir(dirName) {
-    // let watcher = fs.watch(`${dirName}`, 'utf-8', compileAllPages)
+    
     let watcher = chokidar.watch(`${dirName}`, { ignoreInitial: true });
-    watcher.on('all', compileAllPages);
+    watcher.on('change', compileAllPages);
+    watcher.on('unlink', (e)=>{
+        // console.log(e,a);
+        let deleted = path.parse(e)
+        if (deleted.dir === 'components') return
+
+        if (deleted.dir === 'pages')
+        fs.rmSync(`0Export/${deleted.name}.html`)
+        else {
+            if (deleted.name === "index") return
+            else {
+                let dir = deleted.dir.replace('pages/', '');
+                fs.rmSync(`0Export/${dir}/${deleted.name}.html`)
+                console.log(deleted)
+            }
+        }
+    });
 
     watchEmmiter.on('stop', () => {
         watcher.close();
@@ -101,6 +117,7 @@ function startWatch() {
 }
 
 function compileAllPages() {
+    // startWatch();return 0;
     watchEmmiter.emit('stop');
     watchEmmiter.removeAllListeners();
 
