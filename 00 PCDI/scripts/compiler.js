@@ -6,13 +6,19 @@ const watchEmmiter = new events.EventEmitter();
 const chokidar = require('chokidar');
 
 function compile(page) {
-
     let pageChilds;
-    if (fs.existsSync(`pages/${page}`)) {
+    let hasChildren = ()=>{
+        if (fs.existsSync(`pages/${page}`) && fs.readdirSync(`pages/${page}`).length >= 1)
+        return true
+        else
+        return false
+    };
+
+    if (hasChildren()) {
         pageChilds = fs.readdirSync(`pages/${page}`, 'utf-8');
         pageChilds.forEach(item => {
             let child = path.parse(item).name;
-            console.log(`compiling child ${child} of ${page}...`)
+            console.log(`compiling ${page} => ${child}`)
 
             //pre compile into virtual dom
             const originalFile = fs.readFileSync(`pages/${page}.pug`, 'utf-8');
@@ -69,7 +75,6 @@ function startWatch() {
     watchDir('components/')
     watchDir('pages/')
 }
-
 
 function compileAllPages() {
     watchEmmiter.emit('stop');
