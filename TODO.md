@@ -5,3 +5,4 @@
 4. rename the router
 5. add safty option in all senarios possible
 6. add crash handler
+7. create static export

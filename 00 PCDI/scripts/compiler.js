@@ -24,6 +24,7 @@ function compile(page) {
             const originalFile = fs.readFileSync(`pages/${page}.pug`, 'utf-8');
             let preCompiledFile = originalFile.replace(/include .*/, `include ../../../pages/${page}/${child}`);
             preCompiledFile = preCompiledFile.replaceAll('#{currentPage}', `${child}`);
+            preCompiledFile = preCompiledFile.replaceAll("href", `href="me"`);
 
             fs.writeFileSync(`00 PCDI/virtualDOM/pages/${page}.pug`, preCompiledFile, 'utf-8');
 
