@@ -4,6 +4,7 @@ const path = require('path');
 const events = require('events');
 const watchEmmiter = new events.EventEmitter();
 const chokidar = require('chokidar');
+const watchSCSS = require('./watchSCSS')
 
 function buildBase(page, isChild=false) {
     //build the base for the page
@@ -135,3 +136,4 @@ function compileAllPages() {
 }
 
 compileAllPages()
+watchSCSS('styles');
