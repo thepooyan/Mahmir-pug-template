@@ -1,1 +1,0 @@
-start /b nodemon ".\00 PCDI\scripts\compiler.js" & start  /b sass -w --load-path=./ "00 PCDI/base/base.scss" "0Export/Content/style.css" & start /b live-server ./0Export
