@@ -6,9 +6,14 @@ so you might say it's a kind of router, built on top of pug, with a compiler tha
 ### this is a solve for dynamic include problem in pug js
 
 ## getting started
-1. first clone this repository in your own system
-2. then, install the required dependencies, using this comman: `npm install`
-3. you need to install `sass` and `live-server` globally, so run `npm install -g sass` and `npm istall -g live-server`
+1. first clone this repository in your own system usuing the command:
+```
+git clone https://github.com/thepooyan/Mahmir-pug-template.git
+```
+2. then, install the required dependencies, using this command: 
+```
+npm install
+```
 
 that's it! now just open the project in your favorite editor, and run `npm start` to start up the project!
 

@@ -5,6 +5,7 @@ const events = require('events');
 const watchEmmiter = new events.EventEmitter();
 const chokidar = require('chokidar');
 const watchSCSS = require('./watchSCSS')
+const liveServe = require('./liveServe');
 
 function buildBase(page, isChild=false) {
     //build the base for the page
@@ -137,3 +138,4 @@ function compileAllPages() {
 
 compileAllPages()
 watchSCSS('styles');
+liveServe('./0Export')
