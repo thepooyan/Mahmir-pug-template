@@ -10,7 +10,7 @@ so you might say it's a kind of router, built on top of pug, with a compiler tha
 2. then, install the required dependencies, using this comman: `npm install`
 3. you need to install `sass` and `live-server` globally, so run `npm install -g sass` and `npm istall -g live-server`
 
-that's it! now just open the project in your favorite editor, start the compiler script (start.bat for windows and start.sh for linux)
+that's it! now just open the project in your favorite editor, and run `npm start` to start up the project!
 
 create your new pages in the `pages` folder, and write some pug code!
 
