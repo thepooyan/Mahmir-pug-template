@@ -6,7 +6,7 @@
     "sass": "^1.56.1"
   },
   "scripts": {
-    "start": "node \"./00 PCDI/scripts/compiler.js\"",
-    "watch": "nodemon \"./00 PCDI/scripts/compiler.js\""
+    "start": "node \"./00 PCDI/scripts/watcher.js\"",
+    "watch": "nodemon \"./00 PCDI/scripts/watcher.js\""
   }
 }

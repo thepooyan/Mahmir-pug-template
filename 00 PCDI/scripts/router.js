@@ -1,11 +1,7 @@
 const pug = require('pug');
 const fs = require('fs');
 const path = require('path');
-const events = require('events');
-const watchEmmiter = new events.EventEmitter();
-const chokidar = require('chokidar');
-const watchSCSS = require('./watchSCSS')
-const liveServe = require('./liveServe');
+
 
 function buildBase(page, isChild=false) {
     //build the base for the page
@@ -37,8 +33,7 @@ function preCompile(file, page) {
     
     return file
 }
-
-function compile(page) {
+function compilePage(page) {
     let pageChilds;
     let hasChildren = () => {
         if (fs.existsSync(`pages/${page}`) && fs.readdirSync(`pages/${page}`).length >= 1)
@@ -86,56 +81,4 @@ function compile(page) {
 
 }
 
-
-//watch depencies
-function watchDir(dirName) {
-    
-    let watcher = chokidar.watch(`${dirName}`, { ignoreInitial: true });
-    watcher.on('change', compileAllPages);
-    watcher.on('unlink', (e)=>{
-        // console.log(e,a);
-        let deleted = path.parse(e)
-        if (deleted.dir === 'components') return
-
-        if (deleted.dir === 'pages')
-        fs.existsSync(`0Export/${deleted.name}.html`) && fs.rmSync(`0Export/${deleted.name}.html`)
-        else {
-            if (deleted.name === "index") return
-            else {
-                let dir = deleted.dir.replace('pages/', '');
-                fs.existsSync(`0Export/${dir}/${deleted.name}.html`) && fs.rmSync(`0Export/${dir}/${deleted.name}.html`)
-                if (fs.readdirSync(`0Export/${dir}`).length === 0)
-                fs.rmdirSync(`0Export/${dir}`)
-            }
-        }
-    });
-
-    watchEmmiter.on('stop', () => {
-        watcher.close();
-    })
-    console.log(`watching ${dirName}...`)
-}
-
-function startWatch() {
-    watchDir('components/')
-    watchDir('pages/')
-}
-
-function compileAllPages() {
-    // startWatch();return 0;
-    watchEmmiter.emit('stop');
-    watchEmmiter.removeAllListeners();
-
-    const pages = fs.readdirSync('./pages', 'utf-8')
-    pages.forEach(item => {
-        itemPath = path.parse(item);
-        if (itemPath.ext.toLowerCase() === '.pug')
-            compile(itemPath.name)
-    })
-
-    startWatch();
-}
-
-compileAllPages()
-watchSCSS('styles');
-liveServe('./0Export')
+module.exports = compilePage;
