@@ -38,7 +38,7 @@ function watchDir(dir) {
 }
 
 function garbageChecker(dir) {
-    chokidar.watch(dir, { ignoreInitial: true }).on('unlink', (p, e) => {
+    chokidar.watch(dir, { ignoreInitial: true }).on('unlink', (e) => {
         let deleted = path.parse(e)
         
         if (deleted.dir === 'pages')
@@ -48,13 +48,18 @@ function garbageChecker(dir) {
             else {
                 let dir = deleted.dir.replace('pages/', '');
                 fs.existsSync(`0Export/${dir}/${deleted.name}.html`) && fs.rmSync(`0Export/${dir}/${deleted.name}.html`)
+                console.log(`deleted file ${deleted.name}.html`);
+
                 if (fs.readdirSync(`0Export/${dir}`).length === 0)
                 fs.rmdirSync(`0Export/${dir}`)
+                console.log(`deleted dir ${dir}`);
             }
         }
     })
 
 }
+compileAllPages()
+compileSass()
 
 watchDir('styles')
 watchDir('components')
