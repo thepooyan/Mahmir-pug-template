@@ -1,5 +1,3 @@
-const events = require('events')
-const watchEmmiter = new events.EventEmitter();
 const chokidar = require('chokidar');
 const path = require('path');
 const fs = require('fs');
@@ -47,12 +45,16 @@ function garbageChecker(dir) {
             if (deleted.name === "index") return
             else {
                 let dir = deleted.dir.replace('pages/', '');
-                fs.existsSync(`0Export/${dir}/${deleted.name}.html`) && fs.rmSync(`0Export/${dir}/${deleted.name}.html`)
-                console.log(`deleted file ${deleted.name}.html`);
+                
+                if (fs.existsSync(`0Export/${dir}/${deleted.name}.html`)) {
+                    fs.rmSync(`0Export/${dir}/${deleted.name}.html`)
+                    console.log(`deleted file ${deleted.name}.html`);
+                }
 
-                if (fs.readdirSync(`0Export/${dir}`).length === 0)
-                fs.rmdirSync(`0Export/${dir}`)
-                console.log(`deleted dir ${dir}`);
+                if (fs.readdirSync(`0Export/${dir}`).length === 0) {
+                    fs.rmdirSync(`0Export/${dir}`)
+                    console.log(`deleted dir ${dir}`);
+                }
             }
         }
     })
