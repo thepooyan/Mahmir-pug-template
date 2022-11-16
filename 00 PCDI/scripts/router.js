@@ -17,7 +17,7 @@ function buildBase(page, isChild=false) {
 
     let modifiedBase = base.replace(/include .*/, `include ../virtualDOM/${page}`)
     if (isChild)
-    modifiedBase = base.replace("Content/style.css", "../Content/style.css")
+    modifiedBase = base.replace('base(href="./")', 'base(href="../")')
     fs.writeFileSync('00 PCDI/base/base.pug', modifiedBase, 'utf-8');
     
     return function() {
