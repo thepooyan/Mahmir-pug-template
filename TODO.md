@@ -1,6 +1,6 @@
 # to add to the prj:
 
-1. garbage collector for virtual dom
+
 3. more router options
 
 5. add safty option in all senarios possible

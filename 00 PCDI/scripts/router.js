@@ -2,7 +2,15 @@ const pug = require('pug');
 const fs = require('fs');
 const path = require('path');
 
-
+function cleanVD() {
+    try {
+        fs.rmdirSync('00 PCDI/virtualDOM', {recursive: true, force: true});
+        fs.mkdirSync('00 PCDI/virtualDOM');
+        fs.writeFileSync('00 PCDI/virtualDOM/.gitkeep', 'THIS FOLDER SHOULD BE KEPT IN GIT', 'utf-8');
+    } catch (err) {
+        console.log(err);
+    }
+}
 function buildBase(page, isChild=false) {
     //build the base for the page
     const base = fs.readFileSync('00 PCDI/base/base.pug', 'utf-8');
@@ -19,7 +27,9 @@ function buildBase(page, isChild=false) {
 function compileBase() {
     let compiler = pug.compileFile('00 PCDI/base/base.pug');
     let compiledFile = compiler()
+    cleanVD()
     return compiledFile
+
 }
 function preCompile(file, page) {
 
