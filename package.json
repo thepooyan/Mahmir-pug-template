@@ -7,6 +7,7 @@
   },
   "scripts": {
     "start": "node \"./00 PCDI/scripts/watcher.js\"",
-    "watch": "nodemon \"./00 PCDI/scripts/watcher.js\""
+    "watch": "nodemon \"./00 PCDI/scripts/watcher.js\"",
+    "export": "node \"./00 PCDI/scripts/componentExport.js\""
   }
 }
