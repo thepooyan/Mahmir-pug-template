@@ -27,7 +27,6 @@ function buildBase(page, isChild=false) {
 function compileBase() {
     let compiler = pug.compileFile('00 PCDI/base/base.pug');
     let compiledFile = compiler()
-    cleanVD()
     return compiledFile
 
 }
@@ -44,6 +43,8 @@ function preCompile(file, page) {
     return file
 }
 function compilePage(page) {
+    cleanVD()
+
     let pageChilds;
     let hasChildren = () => {
         if (fs.existsSync(`pages/${page}`) && fs.readdirSync(`pages/${page}`).length >= 1)

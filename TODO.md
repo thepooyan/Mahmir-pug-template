@@ -10,3 +10,6 @@
 9. config.json
 
 12. static export
+
+BUGS:
+- does not  track renamed files (new files?)
