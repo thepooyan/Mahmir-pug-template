@@ -3,12 +3,13 @@ $mobile: 480px;
 $tablet: 698px;
 $laptop: 992px;
 $screen: 1200px;
+
 @function orientation() {
-    @if ($orientation == 'screen') {
+    @if ($orientation =='screen') {
         @return 'max-width';
     }
 
-    @if ($orientation == 'mobile') {
+    @if ($orientation =='mobile') {
         @return 'min-width'
     }
 }
@@ -27,39 +28,39 @@ $screen: 1200px;
 @mixin flex($just, $align, $dir: row) {
     display: flex;
 
-    @if $just == c {
+    @if $just ==c {
         $just: center;
     }
 
-    @if $just == s {
+    @if $just ==s {
         $just: flex-start;
     }
 
-    @if $just == e {
+    @if $just ==e {
         $just: flex-end;
     }
 
-    @if $just == sa {
+    @if $just ==sa {
         $just: space-around;
     }
 
-    @if $just == sb {
+    @if $just ==sb {
         $just: space-between;
     }
 
-    @if $just == se {
+    @if $just ==se {
         $just: space-evenly;
     }
 
-    @if $align == c {
+    @if $align ==c {
         $align: center;
     }
 
-    @if $align == s {
+    @if $align ==s {
         $align: flex-start;
     }
 
-    @if $align == e {
+    @if $align ==e {
         $align: flex-end;
     }
 
@@ -76,4 +77,9 @@ $screen: 1200px;
 @mixin scalePics($width, $height, $scale) {
     width: $width / $scale;
     height: $height / $scale;
+}
+
+@mixin touchFeedback() {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -moz-tap-highlight-color: rgba(0, 0, 0, 0);
 }
