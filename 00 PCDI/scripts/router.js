@@ -1,6 +1,7 @@
 const pug = require('pug');
 const fs = require('fs');
 const path = require('path');
+const { crashed } = require('./crashHandler');
 
 function cleanVD() {
     try {
@@ -27,9 +28,13 @@ function buildBase(page, isChild=false) {
 }
 
 function compileBase() {
-    let compiler = pug.compileFile('00 PCDI/base/base.pug');
-    let compiledFile = compiler()
-    return compiledFile
+    try {
+        let compiler = pug.compileFile('00 PCDI/base/base.pug');
+        let compiledFile = compiler()
+        return compiledFile
+    } catch(err) {
+        crashed(err);
+    }
 }
 
 function preCompile(file, page) {

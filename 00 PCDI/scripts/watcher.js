@@ -47,3 +47,5 @@ watchDir('pages')
 garbageChecker('pages')
 
 serveFolder('0Export')
+
+exports.compileAllPages = compileAllPages;
