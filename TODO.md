@@ -5,6 +5,7 @@
 6. (?) add crash handler
 9. (?) config.json
 13. static export for pages
+14. cleaner for pages deleted while watcher was not running
 
 BUGS:
 - does not  track renamed files (new files?)
