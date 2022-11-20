@@ -8,3 +8,5 @@
 
 /00 PCDI/virtualDOM/*.pug
 /00 PCDI/virtualDOM/*/*.pug
+
+/0StaticExport
