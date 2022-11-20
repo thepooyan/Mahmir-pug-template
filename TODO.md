@@ -6,6 +6,7 @@
 9. (?) config.json
 13. static export for pages
 14. cleaner for pages deleted while watcher was not running
+15. create a local variable for each child to be accessible anywhere
 
 BUGS:
 - does not  track renamed files (new files?)
