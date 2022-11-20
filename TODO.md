@@ -8,6 +8,7 @@
 14. cleaner for pages deleted while watcher was not running
 15. create a local variable for each child to be accessible anywhere
 16. does including components work?
+17. remove depricated
 
 BUGS:
 - does not  track renamed files (new files?)
