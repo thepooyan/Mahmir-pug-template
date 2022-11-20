@@ -33,7 +33,8 @@ function compileBase() {
         let compiledFile = compiler()
         return compiledFile
     } catch(err) {
-        crashed(err);
+        // crashed(err);
+        console.log(err);
     }
 }
 
