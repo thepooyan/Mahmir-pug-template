@@ -9,6 +9,7 @@
 15. create a local variable for each child to be accessible anywhere
 16. does including components work?
 17. remove depricated
+18. compile only changed pages
 
 BUGS:
 - does not  track renamed files (new files?)
