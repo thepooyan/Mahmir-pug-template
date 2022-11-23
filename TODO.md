@@ -11,5 +11,7 @@
 17. remove depricated
 18. compile only changed pages
 
+19. add api
+
 BUGS:
 - does not  track renamed files (new files?)
