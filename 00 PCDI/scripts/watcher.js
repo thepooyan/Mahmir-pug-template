@@ -6,6 +6,7 @@ const compileSass = require('./sassCompiler');
 const serveFolder = require('./liveServer');
 const compilePage = require('./router');
 const garbageChecker = require('./garbageChecker');
+const scanRoute = require('../backend/app');
 
 function compileAllPages() {
     // watchEmmiter.emit('stop');
@@ -47,5 +48,6 @@ watchDir('pages')
 garbageChecker('pages')
 
 serveFolder('0Export')
+scanRoute('/')
 
 exports.compileAllPages = compileAllPages;
